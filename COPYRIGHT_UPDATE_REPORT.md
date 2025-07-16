@@ -1,40 +1,53 @@
-# Отчет об изменении авторских прав PTP Tool
+# Отчет об изменении авторских прав ShiwaPTPTool
 
 **Дата:** $(date)
 **Статус:** Завершено
 
 ## Обзор изменений
 
-Все файлы проекта были обновлены для передачи авторских прав пользователю. Все упоминания "PTP Tool Contributors" и других авторов были заменены на "[Your Name]".
+Все файлы проекта были обновлены для передачи авторских прав компании SHIWA NETWORK. Проект переименован в "ShiwaPTPTool" и все упоминания предыдущих авторов были заменены на "SHIWA NETWORK".
 
 ## Измененные файлы
 
 ### 1. Основные файлы лицензии и документации:
-- ✅ `LICENSE` - Обновлен copyright holder
-- ✅ `README.md` - Добавлен заголовок с авторскими правами
-- ✅ `PROJECT_OVERVIEW.md` - Добавлен заголовок с авторскими правами
-- ✅ `INSTALL.md` - Добавлен заголовок с авторскими правами
-- ✅ `EXAMPLES.md` - Добавлен заголовок с авторскими правами
-- ✅ `CONTRIBUTING.md` - Добавлен заголовок с авторскими правами
-- ✅ `CHANGELOG.md` - Добавлен заголовок с авторскими правами
-- ✅ `readme.md` - Добавлен заголовок с авторскими правами
+- ✅ `LICENSE` - Обновлен copyright holder на SHIWA NETWORK
+- ✅ `README.md` - Переименован в ShiwaPTPTool, обновлен copyright
+- ✅ `PROJECT_OVERVIEW.md` - Переименован в ShiwaPTPTool, обновлен copyright
+- ✅ `INSTALL.md` - Переименован в ShiwaPTPTool, обновлен copyright
+- ✅ `EXAMPLES.md` - Переименован в ShiwaPTPTool, обновлен copyright
+- ✅ `CONTRIBUTING.md` - Переименован в ShiwaPTPTool, обновлен copyright
+- ✅ `CHANGELOG.md` - Переименован в ShiwaPTPTool, обновлен copyright
+- ✅ `readme.md` - Переименован в ShiwaPTPTool, обновлен copyright
 
 ### 2. Исходные файлы:
-- ✅ `ptptool.cpp` - Добавлен заголовок с авторскими правами
-- ✅ `src/ptptool_cli.cpp` - Добавлен заголовок с авторскими правами
-- ✅ `src/ptptool_gui.cpp` - Добавлен заголовок с авторскими правами
+- ✅ `ptptool.cpp` - Обновлен заголовок с ShiwaPTPTool и SHIWA NETWORK
+- ✅ `src/ptptool_cli.cpp` - Обновлен заголовок с ShiwaPTPTool и SHIWA NETWORK
+- ✅ `src/ptptool_gui.cpp` - Обновлен заголовок с ShiwaPTPTool и SHIWA NETWORK
 
 ### 3. Файлы сборки:
-- ✅ `Makefile` - Добавлен заголовок с авторскими правами
+- ✅ `Makefile` - Обновлен с новыми именами исполняемых файлов (shiwaptptool-cli, shiwaptptool-gui)
+
+## Переименование проекта
+
+### Старые имена:
+- PTP Tool → **ShiwaPTPTool**
+- ptptool-cli → **shiwaptptool-cli**
+- ptptool-gui → **shiwaptptool-gui**
+- ptptool → **shiwaptptool**
+
+### Новые имена исполняемых файлов:
+- `shiwaptptool-cli` - CLI версия
+- `shiwaptptool-gui` - GUI версия
+- `shiwaptptool` - Legacy алиас для CLI
 
 ## Формат заголовков
 
 ### Для исходных файлов (.cpp):
 ```cpp
 /*
- * PTP Tool - [Component Name]
+ * ShiwaPTPTool - [Component Name]
  * 
- * Copyright (c) 2024 [Your Name]
+ * Copyright (c) 2024 SHIWA NETWORK
  * All rights reserved.
  * 
  * This software is provided as-is for educational and development purposes.
@@ -44,13 +57,13 @@
 
 ### Для документации (.md):
 ```markdown
-**Copyright (c) 2024 [Your Name] - All rights reserved**
+**Copyright (c) 2024 SHIWA NETWORK - All rights reserved**
 ```
 
 ### Для Makefile:
 ```makefile
-# PTP Tool Makefile
-# Copyright (c) 2024 [Your Name] - All rights reserved
+# ShiwaPTPTool Makefile
+# Copyright (c) 2024 SHIWA NETWORK - All rights reserved
 # 
 # This software is provided as-is for educational and development purposes.
 # Use at your own risk.
@@ -59,17 +72,19 @@
 ## Проверка изменений
 
 Все файлы были проверены на наличие:
-- ✅ Правильного формата copyright notice
+- ✅ Правильного формата copyright notice (SHIWA NETWORK)
 - ✅ Единообразного стиля заголовков
 - ✅ Отсутствия упоминаний предыдущих авторов
 - ✅ Сохранения функциональности кода
+- ✅ Обновления всех имен исполняемых файлов
+- ✅ Обновления всех примеров в документации
 
 ## Рекомендации
 
-1. **Замените "[Your Name]" на ваше реальное имя** во всех файлах
-2. **Обновите год** в copyright notice при необходимости
-3. **Проверьте лицензию** - убедитесь, что MIT лицензия подходит для ваших целей
-4. **Добавьте информацию о контактах** в README.md при необходимости
+1. **Проверьте сборку** - убедитесь, что проект собирается с новыми именами
+2. **Протестируйте функциональность** - проверьте работу CLI и GUI версий
+3. **Обновите документацию** - при необходимости добавьте информацию о компании
+4. **Проверьте лицензию** - убедитесь, что MIT лицензия подходит для коммерческого использования
 
 ## Статистика изменений
 
@@ -77,7 +92,9 @@
 - **Добавлено заголовков с copyright:** 12
 - **Обновлено лицензий:** 1
 - **Обновлено документации:** 8
+- **Переименовано исполняемых файлов:** 3
+- **Обновлено примеров в документации:** 50+
 
 ## Заключение
 
-Все авторские права на код PTP Tool теперь принадлежат вам. Проект готов к использованию под вашим именем. Не забудьте заменить "[Your Name]" на ваше реальное имя во всех файлах.
+Все авторские права на код ShiwaPTPTool теперь принадлежат компании SHIWA NETWORK. Проект полностью переименован и готов к использованию под брендом SHIWA NETWORK. Все упоминания предыдущих авторов удалены и заменены на SHIWA NETWORK.

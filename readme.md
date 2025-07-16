@@ -1,5 +1,5 @@
-# PTP Tool - Legacy Version
-# Copyright (c) 2024 [Your Name] - All rights reserved
+# ShiwaPTPTool - Legacy Version
+# Copyright (c) 2024 SHIWA NETWORK - All rights reserved
 # 
 # This software is provided as-is for educational and development purposes.
 # Use at your own risk.

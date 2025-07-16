@@ -1,10 +1,10 @@
-# Инструкции по установке PTP Tool
+# Инструкции по установке ShiwaPTPTool
 
-**Copyright (c) 2024 [Your Name] - All rights reserved**
+**Copyright (c) 2024 SHIWA NETWORK - All rights reserved**
 
 ## Обзор
 
-PTP Tool требует установки различных зависимостей в зависимости от того, какую версию вы хотите использовать (CLI, GUI или обе).
+ShiwaPTPTool требует установки различных зависимостей в зависимости от того, какую версию вы хотите использовать (CLI, GUI или обе).
 
 ## Системные требования
 
@@ -149,7 +149,7 @@ echo $?
 sudo ethtool -T eth0 2>/dev/null | grep -i ptp || echo "PTP не поддерживается на eth0"
 ```
 
-## Установка PTP Tool
+## Установка ShiwaPTPTool
 
 ### 1. Клонирование репозитория:
 ```bash
@@ -280,7 +280,7 @@ sudo ./ptptool-cli -d 0 -g
 # Создание systemd сервиса (опционально)
 sudo tee /etc/systemd/system/ptptool.service << EOF
 [Unit]
-Description=PTP Tool Server
+Description=ShiwaPTPTool Server
 After=network.target
 
 [Service]
@@ -318,6 +318,6 @@ sudo udevadm trigger
 
 ## Заключение
 
-После успешной установки всех зависимостей и сборки PTP Tool, вы можете использовать как CLI, так и GUI версии для управления PTP часами.
+После успешной установки всех зависимостей и сборки ShiwaPTPTool, вы можете использовать как CLI, так и GUI версии для управления PTP часами.
 
 Для получения дополнительной помощи обратитесь к основному README.md файлу или создайте issue в репозитории проекта.

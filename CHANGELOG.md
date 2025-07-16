@@ -1,6 +1,6 @@
-# История изменений PTP Tool
+# История изменений ShiwaPTPTool
 
-**Copyright (c) 2024 [Your Name] - All rights reserved**
+**Copyright (c) 2024 SHIWA NETWORK - All rights reserved**
 
 Все значимые изменения в этом проекте документируются в этом файле.
 

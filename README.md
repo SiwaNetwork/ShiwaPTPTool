@@ -1,8 +1,8 @@
-# PTP Tool - Precision Time Protocol Management Tool
+# ShiwaPTPTool - Precision Time Protocol Management Tool
 
-**Copyright (c) 2024 [Your Name] - All rights reserved**
+**Copyright (c) 2024 SHIWA NETWORK - All rights reserved**
 
-PTP Tool - это комплексное решение для управления PTP (Precision Time Protocol) часами с поддержкой как командной строки (CLI), так и графического интерфейса (GUI).
+ShiwaPTPTool - это комплексное решение для управления PTP (Precision Time Protocol) часами с поддержкой как командной строки (CLI), так и графического интерфейса (GUI).
 
 ## Возможности
 
@@ -52,10 +52,10 @@ cd PTPtool
 make all
 
 # Или только CLI версии
-make ptptool-cli
+make shiwaptptool-cli
 
 # Или только GUI версии
-make ptptool-gui
+make shiwaptptool-gui
 ```
 
 ### 3. Установка (опционально)
@@ -73,7 +73,7 @@ sudo make uninstall
 
 #### Основной синтаксис:
 ```bash
-ptptool-cli [опции]
+shiwaptptool-cli [опции]
 ```
 
 #### Основные опции:
@@ -106,39 +106,39 @@ ptptool-cli [опции]
 
 **Получение времени:**
 ```bash
-sudo ptptool-cli -d 0 -g
+sudo shiwaptptool-cli -d 0 -g
 ```
 
 **Показать возможности устройства:**
 ```bash
-sudo ptptool-cli -d 0 -c
+sudo shiwaptptool-cli -d 0 -c
 ```
 
 **Измерить смещение (5 измерений):**
 ```bash
-sudo ptptool-cli -d 0 -k 5
+sudo shiwaptptool-cli -d 0 -k 5
 ```
 
 **Настроить частоту:**
 ```bash
-sudo ptptool-cli -d 0 -f 1000
+sudo shiwaptptool-cli -d 0 -f 1000
 ```
 
 **Запустить сервер:**
 ```bash
-ptptool-cli -G
+shiwaptptool-cli -G
 ```
 
 **Отправить события на удаленный сервер:**
 ```bash
-sudo ptptool-cli -d 0 -e 10 -E 192.168.1.100 -n myhost
+sudo shiwaptptool-cli -d 0 -e 10 -E 192.168.1.100 -n myhost
 ```
 
 ### GUI версия
 
 #### Запуск:
 ```bash
-ptptool-gui
+shiwaptptool-gui
 ```
 
 #### Интерфейс:

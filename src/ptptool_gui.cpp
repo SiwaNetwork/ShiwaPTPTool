@@ -1,7 +1,7 @@
 /*
- * PTP Tool GUI - Precision Time Protocol Graphical User Interface
+ * ShiwaPTPTool GUI - Precision Time Protocol Graphical User Interface
  * 
- * Copyright (c) 2024 [Your Name]
+ * Copyright (c) 2024 SHIWA NETWORK
  * All rights reserved.
  * 
  * This software is provided as-is for educational and development purposes.
@@ -505,7 +505,7 @@ void PTPWorker::closeDevice() {
 
 // PTPToolGUI Implementation
 PTPToolGUI::PTPToolGUI(QWidget *parent) : QMainWindow(parent) {
-    setWindowTitle("PTP Tool GUI - Precision Time Protocol Management");
+            setWindowTitle("ShiwaPTPTool GUI - Precision Time Protocol Management");
     setMinimumSize(800, 600);
     
     setupUI();
@@ -813,7 +813,7 @@ void PTPToolGUI::onOffsetMeasured(const QString &offset) {
 }
 
 void PTPToolGUI::onErrorOccurred(const QString &error) {
-    QMessageBox::warning(this, "PTP Tool Error", error);
+            QMessageBox::warning(this, "ShiwaPTPTool Error", error);
     logOutput->append(QString("[%1] ERROR: %2").arg(QTime::currentTime().toString("hh:mm:ss")).arg(error));
 }
 
@@ -823,8 +823,8 @@ void PTPToolGUI::onStatusUpdated(const QString &status) {
 }
 
 void PTPToolGUI::onAbout() {
-    QMessageBox::about(this, "About PTP Tool GUI",
-                       "PTP Tool GUI - Precision Time Protocol Management Tool\n\n"
+            QMessageBox::about(this, "About ShiwaPTPTool GUI",
+                "ShiwaPTPTool GUI - Precision Time Protocol Management Tool\n\n"
                        "Version 2.0\n"
                        "A graphical interface for managing PTP clocks and measuring time synchronization.\n\n"
                        "Features:\n"
