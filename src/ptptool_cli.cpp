@@ -1,3 +1,13 @@
+/*
+ * ShiwaPTPTool CLI - Precision Time Protocol Command Line Interface
+ * 
+ * Copyright (c) 2024 SHIWA NETWORK
+ * All rights reserved.
+ * 
+ * This software is provided as-is for educational and development purposes.
+ * Use at your own risk.
+ */
+
 #include <arpa/inet.h>
 #include <assert.h>
 #include <ctype.h>
@@ -41,7 +51,7 @@
 #include <memory>
 #include <functional>
 
-// PTP Tool CLI Class
+// ShiwaPTPTool CLI Class
 class PTPToolCLI {
 private:
     struct Msg {
@@ -142,7 +152,7 @@ public:
 
     static void usage(char *progname) {
         fprintf(stderr,
-                "PTP Tool CLI - Precision Time Protocol Management Tool\n\n"
+                "ShiwaPTPTool CLI - Precision Time Protocol Management Tool\n\n"
                 "usage: %s [options]\n\n"
                 "Device Options:\n"
                 " -d name    device to open (PTP clock index)\n\n"

@@ -1,3 +1,13 @@
+/*
+ * ShiwaPTPTool - Precision Time Protocol Management Tool
+ * 
+ * Copyright (c) 2024 SHIWA NETWORK
+ * All rights reserved.
+ * 
+ * This software is provided as-is for educational and development purposes.
+ * Use at your own risk.
+ */
+
 #include <arpa/inet.h>
 #include <assert.h>
 #include <ctype.h>
