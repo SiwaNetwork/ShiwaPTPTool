@@ -1,5 +1,7 @@
 # PTP Tool - Precision Time Protocol Management Tool
 
+**Copyright (c) 2024 [Your Name] - All rights reserved**
+
 PTP Tool - это комплексное решение для управления PTP (Precision Time Protocol) часами с поддержкой как командной строки (CLI), так и графического интерфейса (GUI).
 
 ## Возможности

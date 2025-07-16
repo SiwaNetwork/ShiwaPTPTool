@@ -1,3 +1,9 @@
+# PTP Tool Makefile
+# Copyright (c) 2024 [Your Name] - All rights reserved
+# 
+# This software is provided as-is for educational and development purposes.
+# Use at your own risk.
+
 CC = g++
 CFLAGS = -O2 -Wall -std=c++17 -pthread 
 LDFLAGS = -lpthread -lrt -levent -levent_core -levent_pthreads

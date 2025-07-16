@@ -1,3 +1,9 @@
+# PTP Tool - Legacy Version
+# Copyright (c) 2024 [Your Name] - All rights reserved
+# 
+# This software is provided as-is for educational and development purposes.
+# Use at your own risk.
+
 Here is PTPtool to modify the ptp POSIX clock
 
 to get PTPtool independently run the following commands

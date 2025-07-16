@@ -1,3 +1,13 @@
+/*
+ * PTP Tool GUI - Precision Time Protocol Graphical User Interface
+ * 
+ * Copyright (c) 2024 [Your Name]
+ * All rights reserved.
+ * 
+ * This software is provided as-is for educational and development purposes.
+ * Use at your own risk.
+ */
+
 #include <QApplication>
 #include <QMainWindow>
 #include <QVBoxLayout>

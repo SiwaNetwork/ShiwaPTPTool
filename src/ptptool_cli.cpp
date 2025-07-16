@@ -1,3 +1,13 @@
+/*
+ * PTP Tool CLI - Precision Time Protocol Command Line Interface
+ * 
+ * Copyright (c) 2024 [Your Name]
+ * All rights reserved.
+ * 
+ * This software is provided as-is for educational and development purposes.
+ * Use at your own risk.
+ */
+
 #include <arpa/inet.h>
 #include <assert.h>
 #include <ctype.h>
