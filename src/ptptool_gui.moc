@@ -1,0 +1,432 @@
+/****************************************************************************
+** Meta object code from reading C++ file 'ptptool_gui.cpp'
+**
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.15)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include <memory>
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'ptptool_gui.cpp' doesn't include <QObject>."
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.15.15. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
+struct qt_meta_stringdata_PTPWorker_t {
+    QByteArrayData data[26];
+    char stringdata0[297];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_PTPWorker_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_PTPWorker_t qt_meta_stringdata_PTPWorker = {
+    {
+QT_MOC_LITERAL(0, 0, 9), // "PTPWorker"
+QT_MOC_LITERAL(1, 10, 11), // "timeUpdated"
+QT_MOC_LITERAL(2, 22, 0), // ""
+QT_MOC_LITERAL(3, 23, 4), // "time"
+QT_MOC_LITERAL(4, 28, 19), // "capabilitiesUpdated"
+QT_MOC_LITERAL(5, 48, 12), // "capabilities"
+QT_MOC_LITERAL(6, 61, 14), // "offsetMeasured"
+QT_MOC_LITERAL(7, 76, 6), // "offset"
+QT_MOC_LITERAL(8, 83, 13), // "errorOccurred"
+QT_MOC_LITERAL(9, 97, 5), // "error"
+QT_MOC_LITERAL(10, 103, 13), // "statusUpdated"
+QT_MOC_LITERAL(11, 117, 6), // "status"
+QT_MOC_LITERAL(12, 124, 7), // "getTime"
+QT_MOC_LITERAL(13, 132, 15), // "getCapabilities"
+QT_MOC_LITERAL(14, 148, 13), // "measureOffset"
+QT_MOC_LITERAL(15, 162, 7), // "samples"
+QT_MOC_LITERAL(16, 170, 15), // "adjustFrequency"
+QT_MOC_LITERAL(17, 186, 3), // "ppb"
+QT_MOC_LITERAL(18, 190, 10), // "adjustTime"
+QT_MOC_LITERAL(19, 201, 7), // "seconds"
+QT_MOC_LITERAL(20, 209, 17), // "setTimeFromSystem"
+QT_MOC_LITERAL(21, 227, 17), // "setSystemFromTime"
+QT_MOC_LITERAL(22, 245, 8), // "listPins"
+QT_MOC_LITERAL(23, 254, 13), // "connectDevice"
+QT_MOC_LITERAL(24, 268, 11), // "deviceIndex"
+QT_MOC_LITERAL(25, 280, 16) // "disconnectDevice"
+
+    },
+    "PTPWorker\0timeUpdated\0\0time\0"
+    "capabilitiesUpdated\0capabilities\0"
+    "offsetMeasured\0offset\0errorOccurred\0"
+    "error\0statusUpdated\0status\0getTime\0"
+    "getCapabilities\0measureOffset\0samples\0"
+    "adjustFrequency\0ppb\0adjustTime\0seconds\0"
+    "setTimeFromSystem\0setSystemFromTime\0"
+    "listPins\0connectDevice\0deviceIndex\0"
+    "disconnectDevice"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_PTPWorker[] = {
+
+ // content:
+       8,       // revision
+       0,       // classname
+       0,    0, // classinfo
+      15,   14, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       5,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   89,    2, 0x06 /* Public */,
+       4,    1,   92,    2, 0x06 /* Public */,
+       6,    1,   95,    2, 0x06 /* Public */,
+       8,    1,   98,    2, 0x06 /* Public */,
+      10,    1,  101,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+      12,    0,  104,    2, 0x0a /* Public */,
+      13,    0,  105,    2, 0x0a /* Public */,
+      14,    1,  106,    2, 0x0a /* Public */,
+      16,    1,  109,    2, 0x0a /* Public */,
+      18,    1,  112,    2, 0x0a /* Public */,
+      20,    0,  115,    2, 0x0a /* Public */,
+      21,    0,  116,    2, 0x0a /* Public */,
+      22,    0,  117,    2, 0x0a /* Public */,
+      23,    1,  118,    2, 0x0a /* Public */,
+      25,    0,  121,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString,    5,
+    QMetaType::Void, QMetaType::QString,    7,
+    QMetaType::Void, QMetaType::QString,    9,
+    QMetaType::Void, QMetaType::QString,   11,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   15,
+    QMetaType::Void, QMetaType::Int,   17,
+    QMetaType::Void, QMetaType::Int,   19,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   24,
+    QMetaType::Void,
+
+       0        // eod
+};
+
+void PTPWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<PTPWorker *>(_o);
+        (void)_t;
+        switch (_id) {
+        case 0: _t->timeUpdated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 1: _t->capabilitiesUpdated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 2: _t->offsetMeasured((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 3: _t->errorOccurred((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 4: _t->statusUpdated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 5: _t->getTime(); break;
+        case 6: _t->getCapabilities(); break;
+        case 7: _t->measureOffset((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->adjustFrequency((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->adjustTime((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->setTimeFromSystem(); break;
+        case 11: _t->setSystemFromTime(); break;
+        case 12: _t->listPins(); break;
+        case 13: _t->connectDevice((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 14: _t->disconnectDevice(); break;
+        default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (PTPWorker::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&PTPWorker::timeUpdated)) {
+                *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (PTPWorker::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&PTPWorker::capabilitiesUpdated)) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (PTPWorker::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&PTPWorker::offsetMeasured)) {
+                *result = 2;
+                return;
+            }
+        }
+        {
+            using _t = void (PTPWorker::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&PTPWorker::errorOccurred)) {
+                *result = 3;
+                return;
+            }
+        }
+        {
+            using _t = void (PTPWorker::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&PTPWorker::statusUpdated)) {
+                *result = 4;
+                return;
+            }
+        }
+    }
+}
+
+QT_INIT_METAOBJECT const QMetaObject PTPWorker::staticMetaObject = { {
+    QMetaObject::SuperData::link<QThread::staticMetaObject>(),
+    qt_meta_stringdata_PTPWorker.data,
+    qt_meta_data_PTPWorker,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
+
+
+const QMetaObject *PTPWorker::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+}
+
+void *PTPWorker::qt_metacast(const char *_clname)
+{
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_PTPWorker.stringdata0))
+        return static_cast<void*>(this);
+    return QThread::qt_metacast(_clname);
+}
+
+int PTPWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QThread::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 15)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 15;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 15)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 15;
+    }
+    return _id;
+}
+
+// SIGNAL 0
+void PTPWorker::timeUpdated(const QString & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void PTPWorker::capabilitiesUpdated(const QString & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void PTPWorker::offsetMeasured(const QString & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void PTPWorker::errorOccurred(const QString & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 3, _a);
+}
+
+// SIGNAL 4
+void PTPWorker::statusUpdated(const QString & _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+struct qt_meta_stringdata_PTPToolGUI_t {
+    QByteArrayData data[23];
+    char stringdata0[304];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_PTPToolGUI_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_PTPToolGUI_t qt_meta_stringdata_PTPToolGUI = {
+    {
+QT_MOC_LITERAL(0, 0, 10), // "PTPToolGUI"
+QT_MOC_LITERAL(1, 11, 9), // "onGetTime"
+QT_MOC_LITERAL(2, 21, 0), // ""
+QT_MOC_LITERAL(3, 22, 17), // "onGetCapabilities"
+QT_MOC_LITERAL(4, 40, 15), // "onMeasureOffset"
+QT_MOC_LITERAL(5, 56, 17), // "onAdjustFrequency"
+QT_MOC_LITERAL(6, 74, 12), // "onAdjustTime"
+QT_MOC_LITERAL(7, 87, 19), // "onSetTimeFromSystem"
+QT_MOC_LITERAL(8, 107, 19), // "onSetSystemFromTime"
+QT_MOC_LITERAL(9, 127, 10), // "onListPins"
+QT_MOC_LITERAL(10, 138, 15), // "onConnectDevice"
+QT_MOC_LITERAL(11, 154, 18), // "onDisconnectDevice"
+QT_MOC_LITERAL(12, 173, 13), // "onTimeUpdated"
+QT_MOC_LITERAL(13, 187, 4), // "time"
+QT_MOC_LITERAL(14, 192, 21), // "onCapabilitiesUpdated"
+QT_MOC_LITERAL(15, 214, 12), // "capabilities"
+QT_MOC_LITERAL(16, 227, 16), // "onOffsetMeasured"
+QT_MOC_LITERAL(17, 244, 6), // "offset"
+QT_MOC_LITERAL(18, 251, 15), // "onErrorOccurred"
+QT_MOC_LITERAL(19, 267, 5), // "error"
+QT_MOC_LITERAL(20, 273, 15), // "onStatusUpdated"
+QT_MOC_LITERAL(21, 289, 6), // "status"
+QT_MOC_LITERAL(22, 296, 7) // "onAbout"
+
+    },
+    "PTPToolGUI\0onGetTime\0\0onGetCapabilities\0"
+    "onMeasureOffset\0onAdjustFrequency\0"
+    "onAdjustTime\0onSetTimeFromSystem\0"
+    "onSetSystemFromTime\0onListPins\0"
+    "onConnectDevice\0onDisconnectDevice\0"
+    "onTimeUpdated\0time\0onCapabilitiesUpdated\0"
+    "capabilities\0onOffsetMeasured\0offset\0"
+    "onErrorOccurred\0error\0onStatusUpdated\0"
+    "status\0onAbout"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_PTPToolGUI[] = {
+
+ // content:
+       8,       // revision
+       0,       // classname
+       0,    0, // classinfo
+      16,   14, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
+
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   94,    2, 0x08 /* Private */,
+       3,    0,   95,    2, 0x08 /* Private */,
+       4,    0,   96,    2, 0x08 /* Private */,
+       5,    0,   97,    2, 0x08 /* Private */,
+       6,    0,   98,    2, 0x08 /* Private */,
+       7,    0,   99,    2, 0x08 /* Private */,
+       8,    0,  100,    2, 0x08 /* Private */,
+       9,    0,  101,    2, 0x08 /* Private */,
+      10,    0,  102,    2, 0x08 /* Private */,
+      11,    0,  103,    2, 0x08 /* Private */,
+      12,    1,  104,    2, 0x08 /* Private */,
+      14,    1,  107,    2, 0x08 /* Private */,
+      16,    1,  110,    2, 0x08 /* Private */,
+      18,    1,  113,    2, 0x08 /* Private */,
+      20,    1,  116,    2, 0x08 /* Private */,
+      22,    0,  119,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   13,
+    QMetaType::Void, QMetaType::QString,   15,
+    QMetaType::Void, QMetaType::QString,   17,
+    QMetaType::Void, QMetaType::QString,   19,
+    QMetaType::Void, QMetaType::QString,   21,
+    QMetaType::Void,
+
+       0        // eod
+};
+
+void PTPToolGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<PTPToolGUI *>(_o);
+        (void)_t;
+        switch (_id) {
+        case 0: _t->onGetTime(); break;
+        case 1: _t->onGetCapabilities(); break;
+        case 2: _t->onMeasureOffset(); break;
+        case 3: _t->onAdjustFrequency(); break;
+        case 4: _t->onAdjustTime(); break;
+        case 5: _t->onSetTimeFromSystem(); break;
+        case 6: _t->onSetSystemFromTime(); break;
+        case 7: _t->onListPins(); break;
+        case 8: _t->onConnectDevice(); break;
+        case 9: _t->onDisconnectDevice(); break;
+        case 10: _t->onTimeUpdated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 11: _t->onCapabilitiesUpdated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 12: _t->onOffsetMeasured((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 13: _t->onErrorOccurred((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 14: _t->onStatusUpdated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 15: _t->onAbout(); break;
+        default: ;
+        }
+    }
+}
+
+QT_INIT_METAOBJECT const QMetaObject PTPToolGUI::staticMetaObject = { {
+    QMetaObject::SuperData::link<QMainWindow::staticMetaObject>(),
+    qt_meta_stringdata_PTPToolGUI.data,
+    qt_meta_data_PTPToolGUI,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
+
+
+const QMetaObject *PTPToolGUI::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+}
+
+void *PTPToolGUI::qt_metacast(const char *_clname)
+{
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_PTPToolGUI.stringdata0))
+        return static_cast<void*>(this);
+    return QMainWindow::qt_metacast(_clname);
+}
+
+int PTPToolGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QMainWindow::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 16)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 16;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 16)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 16;
+    }
+    return _id;
+}
+QT_WARNING_POP
+QT_END_MOC_NAMESPACE

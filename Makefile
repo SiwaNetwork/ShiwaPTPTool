@@ -7,7 +7,10 @@
 CC = g++
 CFLAGS = -O2 -Wall -std=c++17 -pthread 
 LDFLAGS = -lpthread -lrt
-QT_LDFLAGS = -lQt5Core -lQt5Widgets -lQt5Gui
+
+# Qt compilation flags from pkg-config
+QT_CFLAGS = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -fPIC -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtGui
+QT_LDFLAGS = -lQt5Widgets -lQt5Gui -lQt5Core
 
 # Default target
 all: shiwaptptool-cli shiwaptptool-gui
@@ -18,14 +21,17 @@ shiwaptptool-cli: src/ptptool_cli.o
 
 # GUI version
 shiwaptptool-gui: src/ptptool_gui.o
-	$(CC) $(QT_LDFLAGS) $(LDFLAGS) -o $@ $^ 
+	$(CC) -o $@ $^ $(QT_LDFLAGS) -levent $(LDFLAGS)
 
 # Object files
 src/ptptool_cli.o: src/ptptool_cli.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-src/ptptool_gui.o: src/ptptool_gui.cpp
-	$(CC) $(CFLAGS) -fPIC -I/usr/include/qt5 -I/usr/include/qt5/QtCore -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -o $@ -c $<
+src/ptptool_gui.moc: src/ptptool_gui.cpp
+	moc -o $@ $<
+
+src/ptptool_gui.o: src/ptptool_gui.cpp src/ptptool_gui.moc
+	$(CC) $(CFLAGS) $(QT_CFLAGS) -o $@ -c $<
 
 # Legacy target for backward compatibility
 shiwaptptool: shiwaptptool-cli
@@ -34,7 +40,7 @@ shiwaptptool: shiwaptptool-cli
 # Clean target
 .PHONY: clean
 clean:
-	-rm -f *.o *.log shiwaptptool shiwaptptool-cli shiwaptptool-gui src/*.o
+	-rm -f *.o *.log shiwaptptool shiwaptptool-cli shiwaptptool-gui src/*.o src/*.moc
 
 # Format code
 format:
