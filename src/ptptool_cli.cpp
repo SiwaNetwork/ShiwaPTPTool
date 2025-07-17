@@ -63,6 +63,7 @@ private:
     clockid_t clkid;
     int fd = -1;
     bool run_srv = false;
+    static bool server_running;
     char *addr_client = nullptr;
     char *hostname = nullptr;
     int portNum = 9001;
@@ -106,6 +107,11 @@ public:
 
     static void handle_alarm(int s) { 
         printf("received signal %d\n", s); 
+    }
+
+    static void handle_stop_signal(int s) {
+        printf("\nReceived stop signal %d, shutting down server...\n", s);
+        server_running = false;
     }
 
     static int install_handler(int signum, void (*handler)(int)) {
@@ -319,9 +325,89 @@ public:
     }
 
     bool startServer() {
-        fprintf(stderr, "Error: Server functionality is currently disabled due to libevent dependency issues.\n");
-        fprintf(stderr, "Please rebuild with proper libevent configuration or use client mode only.\n");
-        return false;
+        printf("Starting PTP server...\n");
+        
+        // Install signal handlers for graceful shutdown
+        if (install_handler(SIGINT, handle_stop_signal) < 0) {
+            perror("Error installing SIGINT handler");
+            return false;
+        }
+        if (install_handler(SIGTERM, handle_stop_signal) < 0) {
+            perror("Error installing SIGTERM handler");
+            return false;
+        }
+        
+        // Create UDP socket for PTP communication
+        int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+        if (sockfd < 0) {
+            perror("Error creating socket");
+            return false;
+        }
+        
+        // Enable socket reuse
+        int reuse = 1;
+        if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0) {
+            perror("Error setting socket options");
+            close(sockfd);
+            return false;
+        }
+        
+        // Bind to PTP event port (319)
+        struct sockaddr_in server_addr;
+        memset(&server_addr, 0, sizeof(server_addr));
+        server_addr.sin_family = AF_INET;
+        server_addr.sin_addr.s_addr = INADDR_ANY;
+        server_addr.sin_port = htons(319); // PTP event port
+        
+        if (bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+            perror("Error binding socket");
+            close(sockfd);
+            return false;
+        }
+        
+        printf("PTP server listening on port 319...\n");
+        printf("Press Ctrl+C to stop the server.\n");
+        
+        server_running = true;
+        
+        // Simple server loop
+        char buffer[1024];
+        struct sockaddr_in client_addr;
+        socklen_t client_len = sizeof(client_addr);
+        
+        // Set socket to non-blocking for graceful shutdown
+        int flags = fcntl(sockfd, F_GETFL, 0);
+        fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+        
+        while (server_running) {
+            ssize_t received = recvfrom(sockfd, buffer, sizeof(buffer) - 1, 0,
+                                      (struct sockaddr*)&client_addr, &client_len);
+            
+            if (received < 0) {
+                if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                    // No data available, continue
+                    usleep(1000); // Small delay to prevent busy loop
+                    continue;
+                } else if (errno == EINTR) {
+                    continue; // Interrupted by signal, check server_running
+                }
+                perror("Error receiving data");
+                continue;
+            }
+            
+            buffer[received] = '\0';
+            printf("Received PTP request from %s:%d\n", 
+                   inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+            
+            // Simple response - in real implementation this would be proper PTP protocol
+            const char* response = "PTP_RESPONSE";
+            sendto(sockfd, response, strlen(response), 0,
+                   (struct sockaddr*)&client_addr, client_len);
+        }
+        
+        close(sockfd);
+        printf("PTP server stopped.\n");
+        return true;
     }
 
     bool executeCommands() {
@@ -726,6 +812,9 @@ private:
         return true;
     }
 };
+
+// Definition of static member
+bool PTPToolCLI::server_running = false;
 
 int main(int argc, char *argv[]) {
     PTPToolCLI cli;
