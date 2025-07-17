@@ -38,6 +38,10 @@
 #include <QWaitCondition>
 #include <QTime>
 #include <QCloseEvent>
+#include <QTcpServer>
+#include <QTcpSocket>
+#include <QUdpSocket>
+#include <QNetworkInterface>
 
 #include <arpa/inet.h>
 #include <assert.h>
@@ -147,6 +151,205 @@ private:
     void closeDevice();
 };
 
+// PTP Server Class
+class PTPServer : public QObject {
+    Q_OBJECT
+
+public:
+    PTPServer(QObject *parent = nullptr);
+    ~PTPServer();
+
+public slots:
+    void startServer(const QString &address, int port);
+    void stopServer();
+
+signals:
+    void serverStarted(const QString &message);
+    void serverStopped(const QString &message);
+    void clientConnected(const QString &clientInfo);
+    void clientDisconnected(const QString &clientInfo);
+    void dataReceived(const QString &data);
+    void errorOccurred(const QString &error);
+
+private slots:
+    void handleNewConnection();
+    void handleClientDisconnected();
+    void handleDataReceived();
+    void handleUdpDataReceived();
+
+private:
+    QTcpServer *tcpServer;
+    QUdpSocket *udpSocket;
+    QList<QTcpSocket*> clients;
+    QMutex mutex;
+    bool isRunning;
+    QString serverAddress;
+    int serverPort;
+
+    void sendPTPResponse(QTcpSocket *client, const QString &request);
+    void sendUdpPTPResponse(const QHostAddress &address, quint16 port, const QString &request);
+    QString generatePTPResponse(const QString &request);
+};
+
+// PTPServer Implementation
+PTPServer::PTPServer(QObject *parent) : QObject(parent), isRunning(false) {
+    tcpServer = new QTcpServer(this);
+    udpSocket = new QUdpSocket(this);
+    
+    connect(tcpServer, &QTcpServer::newConnection, this, &PTPServer::handleNewConnection);
+    connect(udpSocket, &QUdpSocket::readyRead, this, &PTPServer::handleUdpDataReceived);
+}
+
+PTPServer::~PTPServer() {
+    stopServer();
+}
+
+void PTPServer::startServer(const QString &address, int port) {
+    QMutexLocker locker(&mutex);
+    
+    if (isRunning) {
+        emit errorOccurred("Server is already running");
+        return;
+    }
+    
+    serverAddress = address;
+    serverPort = port;
+    
+    // Start TCP server
+    QHostAddress hostAddress;
+    if (address == "0.0.0.0" || address.isEmpty()) {
+        hostAddress = QHostAddress::Any;
+    } else {
+        hostAddress = QHostAddress(address);
+    }
+    
+    if (!tcpServer->listen(hostAddress, port)) {
+        emit errorOccurred(QString("Failed to start TCP server: %1").arg(tcpServer->errorString()));
+        return;
+    }
+    
+    // Start UDP socket for PTP protocol (port 319 is standard PTP event port)
+    int ptpPort = (port == 9001) ? 319 : port + 1; // Use PTP standard port or offset
+    if (!udpSocket->bind(hostAddress, ptpPort)) {
+        emit errorOccurred(QString("Failed to bind UDP socket to port %1: %2").arg(ptpPort).arg(udpSocket->errorString()));
+        tcpServer->close();
+        return;
+    }
+    
+    isRunning = true;
+    emit serverStarted(QString("PTP Server started on %1:%2 (TCP) and %3 (UDP)").arg(address).arg(port).arg(ptpPort));
+}
+
+void PTPServer::stopServer() {
+    QMutexLocker locker(&mutex);
+    
+    if (!isRunning) {
+        return;
+    }
+    
+    // Close all client connections
+    for (QTcpSocket *client : clients) {
+        client->disconnectFromHost();
+        client->deleteLater();
+    }
+    clients.clear();
+    
+    // Stop servers
+    tcpServer->close();
+    udpSocket->close();
+    
+    isRunning = false;
+    emit serverStopped("PTP Server stopped");
+}
+
+void PTPServer::handleNewConnection() {
+    while (tcpServer->hasPendingConnections()) {
+        QTcpSocket *client = tcpServer->nextPendingConnection();
+        clients.append(client);
+        
+        connect(client, &QTcpSocket::readyRead, this, &PTPServer::handleDataReceived);
+        connect(client, &QTcpSocket::disconnected, this, &PTPServer::handleClientDisconnected);
+        
+        QString clientInfo = QString("%1:%2").arg(client->peerAddress().toString()).arg(client->peerPort());
+        emit clientConnected(QString("Client connected: %1").arg(clientInfo));
+    }
+}
+
+void PTPServer::handleClientDisconnected() {
+    QTcpSocket *client = qobject_cast<QTcpSocket*>(sender());
+    if (client) {
+        QString clientInfo = QString("%1:%2").arg(client->peerAddress().toString()).arg(client->peerPort());
+        clients.removeAll(client);
+        emit clientDisconnected(QString("Client disconnected: %1").arg(clientInfo));
+        client->deleteLater();
+    }
+}
+
+void PTPServer::handleDataReceived() {
+    QTcpSocket *client = qobject_cast<QTcpSocket*>(sender());
+    if (client) {
+        QByteArray data = client->readAll();
+        QString request = QString::fromUtf8(data);
+        emit dataReceived(QString("TCP Request from %1:%2: %3")
+                         .arg(client->peerAddress().toString())
+                         .arg(client->peerPort())
+                         .arg(request.trimmed()));
+        
+        sendPTPResponse(client, request);
+    }
+}
+
+void PTPServer::handleUdpDataReceived() {
+    while (udpSocket->hasPendingDatagrams()) {
+        QByteArray data;
+        data.resize(udpSocket->pendingDatagramSize());
+        QHostAddress sender;
+        quint16 senderPort;
+        
+        udpSocket->readDatagram(data.data(), data.size(), &sender, &senderPort);
+        QString request = QString::fromUtf8(data);
+        
+        emit dataReceived(QString("UDP Request from %1:%2: %3")
+                         .arg(sender.toString())
+                         .arg(senderPort)
+                         .arg(request.trimmed()));
+        
+        sendUdpPTPResponse(sender, senderPort, request);
+    }
+}
+
+void PTPServer::sendPTPResponse(QTcpSocket *client, const QString &request) {
+    QString response = generatePTPResponse(request);
+    client->write(response.toUtf8());
+    client->flush();
+}
+
+void PTPServer::sendUdpPTPResponse(const QHostAddress &address, quint16 port, const QString &request) {
+    QString response = generatePTPResponse(request);
+    udpSocket->writeDatagram(response.toUtf8(), address, port);
+}
+
+QString PTPServer::generatePTPResponse(const QString &request) {
+    // Generate timestamp
+    auto now = std::chrono::system_clock::now();
+    auto timestamp = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+    
+    // Basic PTP-like response format
+    QString response;
+    
+    if (request.trimmed().toLower().contains("time")) {
+        response = QString("PTP_TIME_RESPONSE: %1 ns\n").arg(timestamp);
+    } else if (request.trimmed().toLower().contains("sync")) {
+        response = QString("PTP_SYNC_RESPONSE: %1 ns\n").arg(timestamp);
+    } else if (request.trimmed().toLower().contains("delay")) {
+        response = QString("PTP_DELAY_RESPONSE: %1 ns\n").arg(timestamp);
+    } else {
+        response = QString("PTP_RESPONSE: Server time %1 ns\n").arg(timestamp);
+    }
+    
+    return response;
+}
+
 // Main GUI Window
 class PTPToolGUI : public QMainWindow {
     Q_OBJECT
@@ -173,6 +376,14 @@ private slots:
     void onErrorOccurred(const QString &error);
     void onStatusUpdated(const QString &status);
     void onAbout();
+    
+    // Server slots
+    void onServerStarted(const QString &message);
+    void onServerStopped(const QString &message);
+    void onClientConnected(const QString &clientInfo);
+    void onClientDisconnected(const QString &clientInfo);
+    void onServerDataReceived(const QString &data);
+    void onServerError(const QString &error);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -229,6 +440,10 @@ private:
     // Worker thread
     PTPWorker *worker;
     QThread *workerThread;
+    
+    // PTP Server
+    PTPServer *ptpServer;
+    QThread *serverThread;
 };
 
 // PTPWorker Implementation
@@ -532,6 +747,21 @@ PTPToolGUI::PTPToolGUI(QWidget *parent) : QMainWindow(parent) {
     connect(worker, &PTPWorker::statusUpdated, this, &PTPToolGUI::onStatusUpdated);
     
     workerThread->start();
+    
+    // Create PTP server thread
+    ptpServer = new PTPServer();
+    serverThread = new QThread();
+    ptpServer->moveToThread(serverThread);
+    
+    // Connect server signals
+    connect(ptpServer, &PTPServer::serverStarted, this, &PTPToolGUI::onServerStarted);
+    connect(ptpServer, &PTPServer::serverStopped, this, &PTPToolGUI::onServerStopped);
+    connect(ptpServer, &PTPServer::clientConnected, this, &PTPToolGUI::onClientConnected);
+    connect(ptpServer, &PTPServer::clientDisconnected, this, &PTPToolGUI::onClientDisconnected);
+    connect(ptpServer, &PTPServer::dataReceived, this, &PTPToolGUI::onServerDataReceived);
+    connect(ptpServer, &PTPServer::errorOccurred, this, &PTPToolGUI::onServerError);
+    
+    serverThread->start();
     
     loadSettings();
 }
@@ -864,21 +1094,49 @@ void PTPToolGUI::closeEvent(QCloseEvent *event) {
 }
 
 void PTPToolGUI::onStartServer() {
+    QString address = serverAddressEdit->text();
     int port = serverPortSpinBox->value();
-    networkLog->append(QString("Starting server on port %1...").arg(port));
     
-    // TODO: Implement server functionality
-    // For now, just show a message
-    networkLog->append("Server functionality is not yet implemented.");
-    startServerButton->setEnabled(false);
-    stopServerButton->setEnabled(true);
+    networkLog->append(QString("Starting server on %1:%2...").arg(address).arg(port));
+    QMetaObject::invokeMethod(ptpServer, "startServer", Qt::QueuedConnection,
+                             Q_ARG(QString, address), Q_ARG(int, port));
 }
 
 void PTPToolGUI::onStopServer() {
     networkLog->append("Stopping server...");
-    
-    // TODO: Implement server stop functionality
-    networkLog->append("Server stopped.");
+    QMetaObject::invokeMethod(ptpServer, "stopServer", Qt::QueuedConnection);
+}
+
+// Server event handlers
+void PTPToolGUI::onServerStarted(const QString &message) {
+    networkLog->append(message);
+    startServerButton->setEnabled(false);
+    stopServerButton->setEnabled(true);
+    statusBarWidget->showMessage("PTP Server running");
+}
+
+void PTPToolGUI::onServerStopped(const QString &message) {
+    networkLog->append(message);
+    startServerButton->setEnabled(true);
+    stopServerButton->setEnabled(false);
+    statusBarWidget->showMessage("PTP Server stopped");
+}
+
+void PTPToolGUI::onClientConnected(const QString &clientInfo) {
+    networkLog->append(clientInfo);
+}
+
+void PTPToolGUI::onClientDisconnected(const QString &clientInfo) {
+    networkLog->append(clientInfo);
+}
+
+void PTPToolGUI::onServerDataReceived(const QString &data) {
+    networkLog->append(data);
+}
+
+void PTPToolGUI::onServerError(const QString &error) {
+    networkLog->append(QString("Server Error: %1").arg(error));
+    QMessageBox::warning(this, "PTP Server Error", error);
     startServerButton->setEnabled(true);
     stopServerButton->setEnabled(false);
 }
