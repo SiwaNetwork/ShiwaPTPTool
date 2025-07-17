@@ -6,7 +6,7 @@
 
 CC = g++
 CFLAGS = -O2 -Wall -std=c++17 -pthread 
-LDFLAGS = -lpthread -lrt -levent -levent_core -levent_pthreads
+LDFLAGS = -lpthread -lrt
 QT_LDFLAGS = -lQt5Core -lQt5Widgets -lQt5Gui
 
 # Default target
