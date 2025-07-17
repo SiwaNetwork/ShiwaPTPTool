@@ -36,6 +36,8 @@
 #include <QThread>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QTime>
+#include <QCloseEvent>
 
 #include <arpa/inet.h>
 #include <assert.h>
@@ -170,6 +172,9 @@ private slots:
     void onStatusUpdated(const QString &status);
     void onAbout();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private:
     void setupUI();
     void setupMenuBar();
@@ -185,7 +190,7 @@ private:
     // UI Components
     QTabWidget *tabWidget;
     QTextEdit *logOutput;
-    QStatusBar *statusBar;
+    QStatusBar *statusBarWidget;
     
     // Device Tab
     QComboBox *deviceComboBox;
@@ -567,8 +572,8 @@ void PTPToolGUI::setupMenuBar() {
 }
 
 void PTPToolGUI::setupStatusBar() {
-    statusBar = this->statusBar();
-    statusBar->showMessage("Ready");
+    statusBarWidget = this->statusBar();
+    statusBarWidget->showMessage("Ready");
 }
 
 void PTPToolGUI::setupDeviceTab() {
@@ -818,7 +823,7 @@ void PTPToolGUI::onErrorOccurred(const QString &error) {
 }
 
 void PTPToolGUI::onStatusUpdated(const QString &status) {
-    statusBar->showMessage(status);
+    statusBarWidget->showMessage(status);
     logOutput->append(QString("[%1] %2").arg(QTime::currentTime().toString("hh:mm:ss")).arg(status));
 }
 
