@@ -700,7 +700,7 @@ private:
         ptp_sys_offset sysoff = {};
         sysoff.n_samples = n_samples;
 
-        if (ioctl(fd, PTP_SYS_OFFSET, sysoff))
+        if (ioctl(fd, PTP_SYS_OFFSET, &sysoff))
             perror("PTP_SYS_OFFSET");
         else
             puts("System and phc clock time offset request okay");

@@ -165,6 +165,8 @@ private slots:
     void onListPins();
     void onConnectDevice();
     void onDisconnectDevice();
+    void onStartServer();
+    void onStopServer();
     void onTimeUpdated(const QString &time);
     void onCapabilitiesUpdated(const QString &capabilities);
     void onOffsetMeasured(const QString &offset);
@@ -302,7 +304,7 @@ void PTPWorker::measureOffset(int samples) {
     ptp_sys_offset sysoff = {};
     sysoff.n_samples = samples;
 
-    if (ioctl(ptpData.fd, PTP_SYS_OFFSET, sysoff)) {
+    if (ioctl(ptpData.fd, PTP_SYS_OFFSET, &sysoff)) {
         emit errorOccurred(QString("PTP_SYS_OFFSET failed: %1").arg(strerror(errno)));
         return;
     }
@@ -749,6 +751,10 @@ void PTPToolGUI::setupNetworkTab() {
     networkLayout->addWidget(startServerButton, 2, 0);
     networkLayout->addWidget(stopServerButton, 2, 1);
     
+    // Connect server buttons
+    connect(startServerButton, &QPushButton::clicked, this, &PTPToolGUI::onStartServer);
+    connect(stopServerButton, &QPushButton::clicked, this, &PTPToolGUI::onStopServer);
+    
     layout->addWidget(networkGroup);
     
     // Network log
@@ -855,6 +861,26 @@ void PTPToolGUI::saveSettings() {
 void PTPToolGUI::closeEvent(QCloseEvent *event) {
     saveSettings();
     QMainWindow::closeEvent(event);
+}
+
+void PTPToolGUI::onStartServer() {
+    int port = serverPortSpinBox->value();
+    networkLog->append(QString("Starting server on port %1...").arg(port));
+    
+    // TODO: Implement server functionality
+    // For now, just show a message
+    networkLog->append("Server functionality is not yet implemented.");
+    startServerButton->setEnabled(false);
+    stopServerButton->setEnabled(true);
+}
+
+void PTPToolGUI::onStopServer() {
+    networkLog->append("Stopping server...");
+    
+    // TODO: Implement server stop functionality
+    networkLog->append("Server stopped.");
+    startServerButton->setEnabled(true);
+    stopServerButton->setEnabled(false);
 }
 
 #include "ptptool_gui.moc"
