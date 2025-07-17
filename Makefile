@@ -9,8 +9,8 @@ CFLAGS = -O2 -Wall -std=c++17 -pthread
 LDFLAGS = -lpthread -lrt
 
 # Qt compilation flags from pkg-config
-QT_CFLAGS = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -fPIC -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtGui
-QT_LDFLAGS = -lQt5Widgets -lQt5Gui -lQt5Core
+QT_CFLAGS = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NETWORK_LIB -fPIC -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork
+QT_LDFLAGS = -lQt5Widgets -lQt5Gui -lQt5Core -lQt5Network
 
 # Default target
 all: shiwaptptool-cli shiwaptptool-gui
