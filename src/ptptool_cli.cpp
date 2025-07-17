@@ -12,11 +12,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>
-#include <event2/event-config.h>
-#include <event2/event.h>
-#include <event2/event_struct.h>
-#include <event2/thread.h>
-#include <event2/util.h>
+#include <netdb.h>
 #include <fcntl.h>
 #include <getopt.h>
 #include <inttypes.h>
@@ -60,7 +56,7 @@ private:
     };
 
     std::map<std::string, Msg> data;
-    evutil_socket_t sendSocket;
+    int sendSocket;
     
     // Configuration
     int device = -1;
@@ -90,7 +86,8 @@ private:
     int settime = 0;
 
     static const int CLOCK_INVALID = -1;
-    static const int ADJ_SETOFFSET = 0x0100;
+
+
 
 public:
     PTPToolCLI() = default;
@@ -322,52 +319,9 @@ public:
     }
 
     bool startServer() {
-        printf("Starting PTP server on *:%d\n", portNum);
-        event_base *base = event_base_new();
-        evutil_socket_t listener = socket(AF_INET, SOCK_DGRAM, 0);
-        evutil_make_socket_nonblocking(listener);
-
-        sockaddr_in sin = {};
-        sin.sin_family = AF_INET;
-        sin.sin_addr.s_addr = 0;
-        sin.sin_port = htons(portNum);
-        if (bind(listener, (sockaddr *)&sin, sizeof(sin)) < 0) {
-            fprintf(stderr, "Error: bind *:%d failed\n", portNum);
-            return false;
-        }
-        
-        timespec lastts = {};
-        auto read_event = event_new(
-            base, listener, EV_READ | EV_PERSIST,
-            [](evutil_socket_t fd, short events, void *arg) {
-                Msg msg;
-                sockaddr_storage their_addr;
-                ev_socklen_t addrlen = sizeof(their_addr);
-                auto r = recvfrom(fd, &msg, sizeof(msg), 0,
-                                (struct sockaddr *)&their_addr, &addrlen);
-                if (r > 0) {
-                    timespec ts = {};
-                    if (clock_gettime(CLOCK_REALTIME, &ts)) {
-                        perror("clock_gettime");
-                    } else {
-                        timespec* lastts = reinterpret_cast<timespec*>(arg);
-                        if (lastts->tv_sec != ts.tv_sec) {
-                            *lastts = ts;
-                            for (auto& d: data) {
-                                printf("%s\t%ld\t", d.first.c_str(), long(d.second.ptpNow) - long(data.begin()->second.ptpNow));
-                            }
-                            printf("\n");
-                            data.clear();
-                        }
-                    }
-                    data[msg.name] = msg; 
-                }
-            },
-            (void *)&lastts);
-        event_add(read_event, NULL);
-        printf("Server started. Listening for PTP messages...\n");
-        event_base_dispatch(base);
-        return true;
+        fprintf(stderr, "Error: Server functionality is currently disabled due to libevent dependency issues.\n");
+        fprintf(stderr, "Please rebuild with proper libevent configuration or use client mode only.\n");
+        return false;
     }
 
     bool executeCommands() {
@@ -540,17 +494,17 @@ private:
     }
 
     bool setupNetworkClient() {
-        evutil_addrinfo hints = {};
+        addrinfo hints = {};
         hints.ai_family = AF_INET;
         hints.ai_socktype = SOCK_DGRAM;
         hints.ai_protocol = IPPROTO_UDP;
-        hints.ai_flags = EVUTIL_AI_ADDRCONFIG;
-        evutil_addrinfo *answer = nullptr;
-        int err = evutil_getaddrinfo(addr_client, std::to_string(portNum).c_str(),
-                                     &hints, &answer);
+        hints.ai_flags = AI_ADDRCONFIG;
+        addrinfo *answer = nullptr;
+        int err = getaddrinfo(addr_client, std::to_string(portNum).c_str(),
+                             &hints, &answer);
         if (err != 0) {
             fprintf(stderr, "Error resolving '%s': %s", addr_client,
-                    evutil_gai_strerror(err));
+                    gai_strerror(err));
             return false;
         }
         sendSocket =
@@ -559,9 +513,11 @@ private:
             return false;
         }
         if (connect(sendSocket, answer->ai_addr, answer->ai_addrlen)) {
-            EVUTIL_CLOSESOCKET(sendSocket);
+            close(sendSocket);
+            freeaddrinfo(answer);
             return false;
         }
+        freeaddrinfo(answer);
         return true;
     }
 
